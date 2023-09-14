@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import NextLink from 'next/link';
-import TASCLogoLight from '@/assets/img/TASCLogoLight.png';
-import TASCLogoDark from '@/assets/img/TASCLogoDark.png';
+import TASCLogoLight from '../../public/TASCLogoLight.png';
+import TASCLogoDark from '../../public/TASCLogoDark.png';
 import Image from 'next/image';
 import useDarkSide from '@/components/UseDarkSide';
 import { DarkModeSwitch } from 'react-toggle-dark-mode';
@@ -68,7 +68,9 @@ const Navbar = () => {
                 }}
                 className={'z-50 absolute h-screen w-full'}
             >
-                <div className={'hidden md:flex bg-white dark:bg-black text-black dark:text-white items-center justify-between py-10 px-10'}>
+                <div
+                    className={'hidden md:flex bg-white dark:bg-black text-black dark:text-white items-center justify-between py-10 px-10 border-b mx-2 border-zinc-300 dark:border-zinc-800 shadow-lg'}
+                >
                     <Image
                         src={colorTheme === 'light' ? TASCLogoLight : TASCLogoDark}
                         width={100}
@@ -79,7 +81,7 @@ const Navbar = () => {
                     <ul className={'flex space-x-5'}>
                         {NAV_ITEMS.map((item) => (
                             <NextLink key={item.title} href={item.href}>
-                                <li>
+                                <li className={'text-2xl'}>
                                     {item.title}
                                 </li>
                             </NextLink>
@@ -97,34 +99,38 @@ const Navbar = () => {
                         alt={'TASC'}
                     />
 
-                    <AiOutlineMenu size={30} onClick={toggleMenu} />
+
+                    <div className={'flex space-x-10'}>
+                        <DarkModeSwitch
+                            checked={darkSide}
+                            onChange={toggleDarkMode}
+                            size={28}
+                            className="duration-200"
+                        />
+                        <AiOutlineMenu size={30} onClick={toggleMenu} />
+                    </div>
 
                     <motion.div
-                        className={`h-screen fixed w-64 bg-gray-800 p-4 top-0 right-0 transform ${
+                        className={`h-full fixed  w-64 text-white dark:text-black bg-black dark:bg-white p-4 top-0 right-0 transform ${
                             isOpen ? 'translate-x-0' : 'translate-x-full'
                         }`}
                         initial={false}
                         animate={menuAnimation}
                     >
-                        <AiOutlineClose
-                            size={30}
-                            onClick={toggleMenu}
-                            style={{ cursor: 'pointer' }}
-                        />
-                        <ul className="h-full space-y-4 text-white">
+                        <div className={'flex w-full justify-end px-8 py-6'}>
+                            <AiOutlineClose
+                                size={30}
+                                onClick={toggleMenu}
+                                style={{ cursor: 'pointer' }}
+                            />
+                        </div>
+
+                        <ul className="h-full text-2xl pt-10 text-center">
                             {NAV_ITEMS.map((item) => (
                                 <NextLink key={item.title} href={item.href}>
-                                    <li>{item.title}</li>
+                                    <li className={' mb-10'}>{item.title}</li>
                                 </NextLink>
                             ))}
-                            <li>
-                                <DarkModeSwitch
-                                    checked={darkSide}
-                                    onChange={toggleDarkMode}
-                                    size={28}
-                                    className="duration-200"
-                                />
-                            </li>
                         </ul>
                     </motion.div>
                 </div>
